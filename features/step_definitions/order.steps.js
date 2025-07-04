@@ -11,6 +11,20 @@ Given("no promotions are applied", function () {
   orderService = new OrderService();
 });
 
+Given("the threshold discount promotion is configured:", function (dataTable) {
+  if (!orderService) orderService = new OrderService();
+  const config = dataTable.hashes()[0];
+  orderService.setThresholdPromotion({
+    threshold: Number(config.threshold),
+    discount: Number(config.discount),
+  });
+});
+
+Given("the buy one get one promotion for cosmetics is active", function () {
+  if (!orderService) orderService = new OrderService();
+  orderService.setBuyOneGetOneCosmetics(true);
+});
+
 When("a customer places an order with:", function (dataTable) {
   orderInput = dataTable.hashes();
   summary = orderService.placeOrder(orderInput);
